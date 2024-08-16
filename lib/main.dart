@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -56,12 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
         shadowColor: const Color(0xFF131313),
         title: Row(
           children: [
-            //  const Icon(
-            //   Icons.movie,
-            //   color: Color(0xFF00B100),
-            //   fill: 0.1,
-            //   size: 56,
-            // ),
+            Image.asset('images/logo.png',width: 45, height: 45),
             const SizedBox(width: 5),
             ShaderMask(
               shaderCallback: (bounds) => const LinearGradient(
@@ -88,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(
         child: _selectedIndex == 0
             ? Container(
-          color: const Color(0xFF0E0E0E),
+          color: const Color(0xFF141414),
         )
             : _selectedIndex == 1
             ? const Text("Not Home")
@@ -107,11 +101,11 @@ class _HomeScreenState extends State<HomeScreen> {
         child: BottomNavigationBar(
           backgroundColor: Colors.black,
           unselectedItemColor: const Color(0xFFFFEED9),
-          selectedFontSize: 17,
+          selectedFontSize: 18,
           unselectedFontSize: 14,
-          selectedItemColor: const Color(0xFF8E8E8E),
+          selectedItemColor: const Color(0xFF00FF00),
           selectedLabelStyle: const TextStyle(
-            color: Color(0xFF717171),
+            color: Color(0xFF00FF00),
             fontFamily: 'alfaSlabOne',
           ),
           unselectedLabelStyle: const TextStyle(
@@ -122,15 +116,15 @@ class _HomeScreenState extends State<HomeScreen> {
           onTap: _onBottomAppBarItemTapped,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home, color: Color(0xFF00FF00)),
+              icon: Icon(Icons.home, color: Color(0xFFFFEED9)),
               label: 'home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite, color: Color(0xFFFF0000)),
+              icon: Icon(Icons.favorite, color: Color(0xFFFFEED9)),
               label: 'favourites',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_rounded, color: Color(0xFFBCBCBC)),
+              icon: Icon(Icons.account_circle_rounded, color: Color(0xFFFFEED9)),
               label: 'profile',
             ),
           ],
