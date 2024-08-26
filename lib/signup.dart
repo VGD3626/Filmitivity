@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
-import 'signup.dart';
+import 'movie_selection.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +57,59 @@ class _LoginPageState extends State<LoginPage> {
                         cursorColor: const Color(0xFFCCFEF0),
                         style: const TextStyle(color: Color(0xFFCCFEF0)),
                         decoration: InputDecoration(
+                          hintText: 'Email',
+                          hintStyle: const TextStyle(
+                            fontSize: 12,
+                            color: Color(0xFFFFEED9),
+                            fontFamily: 'alfaSlabOne',
+                          ),
+                          filled: true,
+                          fillColor: Colors.black,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              color: Color(0xFFCCFEF0),
+                              width: 2.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        cursorColor: const Color(0xFFCCFEF0),
+                        style: const TextStyle(color: Color(0xFFCCFEF0)),
+                        decoration: InputDecoration(
                           hintText: 'Username',
+                          hintStyle: const TextStyle(
+                            fontSize: 12,
+                            color: Color(0xFFFFEED9),
+                            fontFamily: 'alfaSlabOne',
+                          ),
+                          filled: true,
+                          fillColor: Colors.black,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              color: Color(0xFFCCFEF0),
+                              width: 2.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        cursorColor: const Color(0xFFCCFEF0),
+                        style: const TextStyle(color: Color(0xFFCCFEF0)),
+                        decoration: InputDecoration(
+                          hintText: 'Age',
                           hintStyle: const TextStyle(
                             fontSize: 12,
                             color: Color(0xFFFFEED9),
@@ -118,17 +169,14 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         child: TextButton(
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                  const HomeScreen()),
+                              MaterialPageRoute(builder: (context) => const MovieSelectionPage()),
                             );
                           },
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.transparent,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 50, vertical: 15),
+                            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                             backgroundColor: Colors.transparent, // Text color
                           ),
                           child: ShaderMask(
@@ -138,31 +186,13 @@ class _LoginPageState extends State<LoginPage> {
                               end: Alignment.bottomRight,
                             ).createShader(bounds),
                             child: const Text(
-                              'Login',
+                              'Sign Up',
                               style: TextStyle(
                                 fontFamily: 'alfaSlabOne',
                                 fontSize: 18,
                                 color: Colors.black,
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignUpPage()),
-                          );
-                        },
-                        child: const Text(
-                          "Don't have an account? Sign Up",
-                          style: TextStyle(
-                            color: Color(0xFFFFFFFF),
-                            fontSize: 12,
-                            fontFamily: 'alfaSlabOne',
                           ),
                         ),
                       ),

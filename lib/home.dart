@@ -1,4 +1,8 @@
+import 'package:android01/profile.dart';
+import 'package:android01/settings.dart';
 import 'package:flutter/material.dart';
+
+import 'about.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,21 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedIndex = index;
     });
-    // You can add specific actions for each tab here.
-    switch (index) {
-      case 0:
-        print("Home tapped");
-        break;
-      case 1:
-        print("Favourites tapped");
-        break;
-      case 2:
-        print("Search tapped");
-        break;
-      case 3:
-        print("Profile tapped");
-        break;
-    }
   }
 
   @override
@@ -40,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         shadowColor: const Color(0xFF131313),
         title: Row(
           children: [
-            Image.asset('images/logo.png',width: 45, height: 45),
+            Image.asset('images/logo.png', width: 45, height: 45),
             const SizedBox(width: 5),
             ShaderMask(
               shaderCallback: (bounds) => const LinearGradient(
@@ -51,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: const Text(
                 'Filmitivity',
                 style: TextStyle(
-                  color: Colors.white, // This will be overridden by the shader
+                  color: Colors.white,
                   fontFamily: 'alfaSlabOne',
                 ),
               ),
@@ -66,11 +55,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Center(
         child: _selectedIndex == 0
-            ? Container(
-          color: const Color(0xFF141414),
-        )
+            ? Container(color: const Color(0xFF131313)) // Home screen content
             : _selectedIndex == 1
-            ? const Text("Not Home")
+            ? const Text("Favourites") // Replace with actual Favourites content
+            : _selectedIndex == 2
+            ? const Text("Search") // Replace with actual Search content
             : const SizedBox(),
       ),
       bottomNavigationBar: Container(
@@ -78,19 +67,20 @@ class _HomeScreenState extends State<HomeScreen> {
           borderRadius: BorderRadius.zero,
           boxShadow: [
             BoxShadow(
-              color: Color(0xFF131313),
+              color: Color(0xFF090909),
               blurRadius: 8,
             )
           ],
         ),
         child: BottomNavigationBar(
+          elevation: 8,
           backgroundColor: Colors.black,
           unselectedItemColor: const Color(0xFFFFEED9),
           selectedFontSize: 18,
           unselectedFontSize: 14,
-          selectedItemColor: const Color(0xFFCCFEF0),
+          selectedItemColor: const Color(0xFF2EFE57),
           selectedLabelStyle: const TextStyle(
-            color: Color(0xFFCCFEF0),
+            color: Color(0xFF2EFE57),
             fontFamily: 'alfaSlabOne',
           ),
           unselectedLabelStyle: const TextStyle(
@@ -109,8 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
               label: 'favourites',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_rounded, color: Color(0xFFFFEED9)),
-              label: 'profile',
+              icon: Icon(Icons.search, color: Color(0xFFFFEED9)),
+              label: 'search',
             ),
           ],
         ),
@@ -134,6 +124,24 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             ListTile(
+              leading: const Icon(Icons.account_circle_rounded, color: Color(0xFFFFEED9)),
+              title: const Text(
+                'Profile',
+                style: TextStyle(
+                  color: Color(0xFFFFEED9),
+                  fontFamily: 'alfaSlabOne',
+                ),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProfilePage(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.settings, color: Color(0xFFFFEED9)),
               title: const Text(
                 'Settings',
@@ -143,8 +151,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               onTap: () {
-                // Handle settings tap
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsPage(),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -157,8 +169,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               onTap: () {
-                // Handle about tap
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AboutPage(),
+                  ),
+                );
               },
             ),
           ],
