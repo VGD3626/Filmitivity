@@ -1,15 +1,56 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'signup.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final bool showLogoutMessage;
+  const LoginPage({Key? key, this.showLogoutMessage = false}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  String? _errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.showLogoutMessage) {
+      Future.delayed(Duration.zero, () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Successfully logged out'),
+            duration: Duration(seconds: 1), // Display for 1 second
+          ),
+        );
+      });
+    }
+  }
+
+  Future<void> _login() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    } catch (e) {
+      print("Login failed: $e");
+      setState(() {
+        _errorMessage = "Failed to log in. Please check your credentials.";
+      });
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,29 +77,23 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           Image.asset('images/logo.png', width: 45, height: 45),
                           const SizedBox(width: 5),
-                          ShaderMask(
-                            shaderCallback: (bounds) => const LinearGradient(
-                              colors: [Color(0xFF2EFE57), Color(0xFFA3FFE9)],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ).createShader(bounds),
-                            child: const Text(
-                              'Filmitivity',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'alfaSlabOne',
-                                fontSize: 24,
-                              ),
+                          const Text(
+                            'Filmitivity',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'alfaSlabOne',
+                              fontSize: 24,
                             ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        cursorColor: const Color(0xFFCCFEF0),
-                        style: const TextStyle(color: Color(0xFFCCFEF0)),
+                        controller: _emailController,
+                        cursorColor: const Color(0xFF39FF14),
+                        style: const TextStyle(color: Color(0xFF39FF14)),
                         decoration: InputDecoration(
-                          hintText: 'Username',
+                          hintText: 'Email',
                           hintStyle: const TextStyle(
                             fontSize: 12,
                             color: Color(0xFFFFEED9),
@@ -73,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: const BorderSide(
-                              color: Color(0xFFCCFEF0),
+                              color: Color(0xFF39FF14),
                               width: 2.0,
                             ),
                           ),
@@ -81,8 +116,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
+                        controller: _passwordController,
                         obscureText: true,
-                        cursorColor: const Color(0xFFCCFEF0),
+                        cursorColor: const Color(0xFF39FF14),
                         style: const TextStyle(color: Color(0xFFFFEED9)),
                         decoration: InputDecoration(
                           hintText: 'Password',
@@ -100,50 +136,41 @@ class _LoginPageState extends State<LoginPage> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: const BorderSide(
-                              color: Color(0xFFCCFEF0),
+                              color: Color(0xFF39FF14),
                               width: 2.0,
                             ),
                           ),
                         ),
                       ),
                       const SizedBox(height: 20),
+                      if (_errorMessage != null)
+                        Text(
+                          _errorMessage!,
+                          style: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                            fontFamily: 'alfaSlabOne',
+                          ),
+                        ),
+                      const SizedBox(height: 10),
                       Container(
                         decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFF2EFE57), Color(0xFFA3FFE9)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
+                          color: const Color(0xFF2EFE57),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                  const HomeScreen()),
-                            );
-                          },
+                          onPressed: _login,
                           style: TextButton.styleFrom(
-                            foregroundColor: Colors.transparent,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 50, vertical: 15),
-                            backgroundColor: Colors.transparent, // Text color
+                            foregroundColor: Colors.black,
+                            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                            backgroundColor: Colors.transparent,
                           ),
-                          child: ShaderMask(
-                            shaderCallback: (bounds) => const LinearGradient(
-                              colors: [Color(0xFF2EFE57), Color(0xFFA3FFE9)],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ).createShader(bounds),
-                            child: const Text(
-                              'Login',
-                              style: TextStyle(
-                                fontFamily: 'alfaSlabOne',
-                                fontSize: 18,
-                                color: Colors.black,
-                              ),
+                          child: const Text(
+                            'Login',
+                            style: TextStyle(
+                              fontFamily: 'alfaSlabOne',
+                              fontSize: 18,
+                              color: Colors.black,
                             ),
                           ),
                         ),
@@ -153,8 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignUpPage()),
+                            MaterialPageRoute(builder: (context) => const SignUpPage()),
                           );
                         },
                         child: const Text(
